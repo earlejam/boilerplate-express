@@ -1,5 +1,8 @@
+require('dotenv').config()
+
 const INDEX_FILE_PATH = __dirname + '/views/index.html';
 const STATIC_ASSETS_FILE_PATH = __dirname + '/public';
+const UPPERCASE = "uppercase";
 
 let express = require('express');
 let app = express();
@@ -13,7 +16,13 @@ app.get('/', function(req, res) {
 });
 
 app.get('/json', function(req, res) {
-    res.json({"message": "Hello json"});
+    var message = "Hello json";
+
+    if (UPPERCASE === process.env.MESSAGE_STYLE) {
+        message = message.toUpperCase();
+    }
+
+    res.json({"message": message});
 });
 
 
