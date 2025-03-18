@@ -9,6 +9,11 @@ let app = express();
 
 console.log('Hello World');
 
+app.use(function(req, res, next) {
+    console.log(`${req.method} ${req.path} - ${req.ip}`);
+    next();
+});
+
 app.use('/public', express.static(STATIC_ASSETS_FILE_PATH));
 
 app.get('/', function(req, res) {
@@ -24,7 +29,6 @@ app.get('/json', function(req, res) {
 
     res.json({"message": message});
 });
-
 
 
 
