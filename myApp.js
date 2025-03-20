@@ -1,10 +1,11 @@
-require('dotenv').config()
+require('dotenv').config();
 
 const INDEX_FILE_PATH = __dirname + '/views/index.html';
 const STATIC_ASSETS_FILE_PATH = __dirname + '/public';
 const UPPERCASE = "uppercase";
 
 let express = require('express');
+let bodyParser = require('body-parser');
 let app = express();
 
 console.log('Hello World');
@@ -13,6 +14,8 @@ app.use(function(req, res, next) {
     console.log(`${req.method} ${req.path} - ${req.ip}`);
     next();
 });
+
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.use('/public', express.static(STATIC_ASSETS_FILE_PATH));
 
@@ -45,8 +48,9 @@ app.get('/name', function(req, res) {
     res.json({"name": `${req.query.first} ${req.query.last}`});
 });
 
-
-
+app.post('/name', function(req, res) {
+    res.json({"name": `${req.body.first} ${req.body.last}`});
+});
 
 
 
